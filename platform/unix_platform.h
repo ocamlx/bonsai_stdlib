@@ -108,8 +108,12 @@ typedef Window window;
 
 inline u64
 GetCycleCount()
-{
+{ 
+#ifdef __APPLE__
+  u64 Result = __builtin_readcyclecounter();
+#else
   u64 Result = __rdtsc();
+#endif
   return Result;
 }
 
@@ -209,11 +213,13 @@ ErrnoToString(s32 Error)
       break;
     }
 
+    #ifndef __APPLE__
     case EBADE:
     {
       Result = "EBADE : Invalid exchange.";
       break;
     }
+    #endif
 
     case EBADF:
     {
@@ -221,11 +227,13 @@ ErrnoToString(s32 Error)
       break;
     }
 
+    #ifndef __APPLE__
     case EBADFD:
     {
       Result = "EBADFD : File descriptor in bad state.";
       break;
     }
+    #endif
 
     case EBADMSG:
     {
@@ -233,6 +241,7 @@ ErrnoToString(s32 Error)
       break;
     }
 
+    #ifndef __APPLE__
     case EBADR:
     {
       Result = "EBADR : Invalid request descriptor.";
@@ -250,6 +259,7 @@ ErrnoToString(s32 Error)
       Result = "EBADSLT : Invalid slot.";
       break;
     }
+    #endif
 
     case EBUSY:
     {
@@ -269,6 +279,7 @@ ErrnoToString(s32 Error)
       break;
     }
 
+    #ifndef __APPLE__
     case ECHRNG:
     {
       Result = "ECHRNG : Channel number out of range.";
@@ -280,6 +291,7 @@ ErrnoToString(s32 Error)
       Result = "ECOMM : Communication error on send.";
       break;
     }
+    #endif
 
     case ECONNABORTED:
     {
@@ -293,12 +305,14 @@ ErrnoToString(s32 Error)
       break;
     }
 
+    #ifndef __APPLE__
     case EDEADLOCK:
     {
       CAssert( EDEADLK == EDEADLOCK);
       Result = "EDEADLOCK : On most architectures, a synonym for EDEADLK.  On some architectures (e.g., Linux MIPS, PowerPC, SPARC), it is a separate error code \"File locking deadlock error\".";
       break;
     }
+    #endif
 
     case EDESTADDRREQ:
     {
@@ -348,11 +362,13 @@ ErrnoToString(s32 Error)
       break;
     }
 
+	#ifndef __APPLE__
     case EHWPOISON:
     {
       Result = "EHWPOISON : Memory page has hardware error.";
       break;
     }
+	#endif
 
     case EIDRM:
     {
@@ -401,7 +417,8 @@ ErrnoToString(s32 Error)
       Result = "EISDIR : Is a directory (POSIX.1-2001).";
       break;
     }
-
+	
+	#ifndef __APPLE__
     case EISNAM:
     {
       Result = "EISNAM : Is a named type file.";
@@ -479,6 +496,7 @@ ErrnoToString(s32 Error)
       Result = "ELIBEXEC : Cannot exec a shared library directly.";
       break;
     }
+	#endif
 
     case ELOOP:
     {
@@ -486,11 +504,13 @@ ErrnoToString(s32 Error)
       break;
     }
 
+	#ifndef __APPLE__
     case EMEDIUMTYPE:
     {
       Result = "EMEDIUMTYPE : Wrong medium type.";
       break;
     }
+	#endif
 
     case EMFILE:
     {
@@ -546,11 +566,13 @@ ErrnoToString(s32 Error)
       break;
     }
 
+	#ifndef __APPLE__
     case ENOANO:
     {
       Result = "ENOANO : No anode.";
       break;
     }
+	#endif
 
     case ENOBUFS:
     {
@@ -582,11 +604,13 @@ ErrnoToString(s32 Error)
       break;
     }
 
+	#ifndef __APPLE__
     case ENOKEY:
     {
       Result = "ENOKEY : Required key not available.";
       break;
     }
+	#endif
 
     case ENOLCK:
     {
@@ -600,11 +624,13 @@ ErrnoToString(s32 Error)
       break;
     }
 
+	#ifndef __APPLE__
     case ENOMEDIUM:
     {
       Result = "ENOMEDIUM : No medium found.";
       break;
     }
+	#endif
 
     case ENOMEM:
     {
@@ -618,6 +644,7 @@ ErrnoToString(s32 Error)
       break;
     }
 
+	#ifndef __APPLE__
     case ENONET:
     {
       Result = "ENONET : Machine is not on the network.";
@@ -629,6 +656,7 @@ ErrnoToString(s32 Error)
       Result = "ENOPKG : Package not installed.";
       break;
     }
+	#endif
 
     case ENOPROTOOPT:
     {
@@ -702,11 +730,13 @@ ErrnoToString(s32 Error)
       break;
     }
 
+	#ifndef __APPLE__
     case ENOTUNIQ:
     {
       Result = "ENOTUNIQ : Name not unique on network.";
       break;
     }
+	#endif
 
     case ENXIO:
     {
@@ -716,7 +746,9 @@ ErrnoToString(s32 Error)
 
     case EOPNOTSUPP:
     {
+	  #ifndef __APPLE__
       CAssert(ENOTSUP == EOPNOTSUPP);
+	  #endif
       Result = "EOPNOTSUPP : Operation not supported on socket (POSIX.1-2001).  (ENOTSUP and EOPNOTSUPP have the same value on Linux, but according to POSIX.1 these error values should be distinct.)";
       break;
     }
@@ -775,11 +807,13 @@ ErrnoToString(s32 Error)
       break;
     }
 
+	#ifndef __APPLE__
     case EREMCHG:
     {
       Result = "EREMCHG : Remote address changed.";
       break;
     }
+	#endif
 
     case EREMOTE:
     {
@@ -787,6 +821,7 @@ ErrnoToString(s32 Error)
       break;
     }
 
+	#ifndef __APPLE__
     case EREMOTEIO:
     {
       Result = "EREMOTEIO : Remote I/O error.";
@@ -804,6 +839,7 @@ ErrnoToString(s32 Error)
       Result = "ERFKILL : Operation not possible due to RF-kill.";
       break;
     }
+	#endif
 
     case EROFS:
     {
@@ -841,11 +877,13 @@ ErrnoToString(s32 Error)
       break;
     }
 
+	#ifndef __APPLE__
     case ESTRPIPE:
     {
       Result = "ESTRPIPE : Streams pipe error.";
       break;
     }
+	#endif
 
     case ETIME:
     {
@@ -871,6 +909,7 @@ ErrnoToString(s32 Error)
       break;
     }
 
+	#ifndef __APPLE__
     case EUCLEAN:
     {
       Result = "EUCLEAN : Structure needs cleaning.";
@@ -882,6 +921,7 @@ ErrnoToString(s32 Error)
       Result = "EUNATCH : Protocol driver not attached.";
       break;
     }
+	#endif
 
     case EUSERS:
     {
@@ -895,11 +935,13 @@ ErrnoToString(s32 Error)
       break;
     }
 
+	#ifndef __APPLE__
     case EXFULL:
     {
       Result = "EXFULL : Exchange full.";
       break;
     }
+	#endif
   }
 
   Assert(Result);
